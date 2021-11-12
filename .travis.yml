@@ -3,19 +3,19 @@ services:
   - docker
 
 before_install:
-  - docker build -t xarentek/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t xarenwo/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true xarentek/react-test npm test -- --coverage
+  - docker run -e CI=true xarenwo/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t xarentek/react-multi-client-prod -f ./client/Dockerfile ./client
-  - docker build -t xarentek/react-multi-server-prod -f ./server/Dockerfile ./server
-  - docker build -t xarentek/react-multi-nginx-prod -f ./nginx/Dockerfile ./nginx
-  - docker build -t xarentek/react-multi-worker-prod -f ./worker/Dockerfile ./worker
+  - docker build -t xarenwo/react-multi-client-prod -f ./client/Dockerfile ./client
+  - docker build -t xarenwo/react-multi-server-prod -f ./server/Dockerfile ./server
+  - docker build -t xarenwo/react-multi-nginx-prod -f ./nginx/Dockerfile ./nginx
+  - docker build -t xarenwo/react-multi-worker-prod -f ./worker/Dockerfile ./worker
 #Take images and push them to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push xarentek/react-multi-client-prod
-  - docker push xarentek/react-multi-server-prod
-  - docker push xarentek/react-multi-nginx-prod
-  - docker push xarentek/react-multi-worker-prod
+  - docker push xarenwo/react-multi-client-prod
+  - docker push xarenwo/react-multi-server-prod
+  - docker push xarenwo/react-multi-nginx-prod
+  - docker push xarenwo/react-multi-worker-prod
