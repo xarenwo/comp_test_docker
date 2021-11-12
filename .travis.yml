@@ -13,3 +13,9 @@ after_success:
   - docker build -t xarentek/react-multi-server-prod -f ./server/Dockerfile ./server
   - docker build -t xarentek/react-multi-nginx-prod -f ./nginx/Dockerfile ./nginx
   - docker build -t xarentek/react-multi-worker-prod -f ./worker/Dockerfile ./worker
+#Take images and push them to docker hub
+  - echo "$DOCKER_PASSWORD" | docker -login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push xarentek/react-multi-client-prod
+  - docker push xarentek/react-multi-server-prod
+  - docker push xarentek/react-multi-nginx-prod
+  - docker push xarentek/react-multi-worker-prod
