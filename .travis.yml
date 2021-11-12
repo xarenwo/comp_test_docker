@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t xarentek/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true xarentek/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t xarentek/react-multi-client-prod -f ./client/Dockerfile ./client
+  - docker build -t xarentek/react-multi-server-prod -f ./server/Dockerfile ./server
+  - docker build -t xarentek/react-multi-nginx-prod -f ./nginx/Dockerfile ./nginx
+  - docker build -t xarentek/react-multi-worker-prod -f ./worker/Dockerfile ./worker
